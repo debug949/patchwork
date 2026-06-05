@@ -8,8 +8,8 @@
 
 Patchwork is a changelog generator that connects to GitHub via OAuth, fetches commit history, and produces a categorized, AI-enhanced changelog — split into features, fixes, refactors, and breaking changes. Every changelog gets a public shareable URL and an embeddable iframe widget.
 
-**Live:** (pending Vercel deployment)
-**GitHub:** (pending repo creation)
+**Live:** https://patchwork-theta.vercel.app
+**GitHub:** https://github.com/debug949/patchwork
 
 ---
 
@@ -111,7 +111,7 @@ Changelog      — generated changelogs with AI content + raw commits
 
 ## Features Remaining
 
-- [ ] Vercel deployment
+- [x] Vercel deployment — https://patchwork-theta.vercel.app
 - [ ] Custom domain
 - [ ] Webhook-triggered auto-generation
 - [ ] PDF export
@@ -138,7 +138,8 @@ Changelog      — generated changelogs with AI content + raw commits
 
 ## Problems Solved
 
-1. **iron-session with Next.js 15+ async cookies** — `cookies()` returns a Promise in Next.js 15+; must `await cookies()` before passing to `getIronSession`.
+1. **PowerShell pipe BOM corruption** — PowerShell 5.1 prepends a UTF-8 BOM (U+FEFF) when piping strings to external processes via `|`. This corrupted the DATABASE_URL in Vercel env vars, making `pg` parse `﻿postgresql://` as an invalid URL and fail with P1001. Fixed by spawning the Vercel CLI from a Node.js script using `cmd.exe` and writing raw `Buffer` bytes directly to stdin, bypassing PowerShell's encoding layer entirely.
+2. **iron-session with Next.js 15+ async cookies** — `cookies()` returns a Promise in Next.js 15+; must `await cookies()` before passing to `getIronSession`.
 2. **Prisma 7 + pg adapter** — Same pattern as ShipSafe: `prisma.config.ts` + `@prisma/adapter-pg`, no url in schema.
 3. **Embed iframe headers** — Next.js sets `X-Frame-Options: SAMEORIGIN` by default; overridden via `next.config.ts` headers for `/embed/*` routes.
 4. **CSRF on OAuth** — Random state token stored in short-lived HttpOnly cookie, verified on callback.

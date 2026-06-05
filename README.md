@@ -1,5 +1,7 @@
 # Patchwork
 
+**Live demo:** https://patchwork-theta.vercel.app
+
 Auto-generate changelogs from your GitHub commits. Shareable public pages and an embeddable iframe widget included.
 
 ## Features
