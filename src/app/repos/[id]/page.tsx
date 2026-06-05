@@ -4,6 +4,7 @@ import { requireSession } from "@/lib/session";
 import { prisma } from "@/lib/db";
 import { GenerateForm } from "@/components/GenerateForm";
 import { ChangelogEntry } from "@/components/ChangelogEntry";
+import { AppNav } from "@/components/AppNav";
 import type { ChangelogContent } from "@/lib/ai";
 
 export default async function RepoPage({
@@ -27,100 +28,85 @@ export default async function RepoPage({
 
   if (!repo) notFound();
 
-  return (
-    <div style={{ minHeight: "100vh" }}>
-      {/* Nav */}
-      <header
+  const rightSlot = (
+    <div style={{ display: "flex", gap: 10 }}>
+      <a
+        href={`https://github.com/${repo.fullName}`}
+        target="_blank"
+        rel="noopener noreferrer"
         style={{
-          borderBottom: "1px solid var(--color-border)",
-          padding: "0 24px",
-          height: 56,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
+          color: "var(--color-muted)",
+          fontSize: 13,
+          textDecoration: "none",
+          border: "1px solid var(--color-border)",
+          padding: "6px 12px",
+          borderRadius: 8,
+          fontFamily: "var(--font-poppins, sans-serif)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <Link
-            href="/"
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontWeight: 700,
-              fontSize: 16,
-              textDecoration: "none",
-              color: "var(--color-fg)",
-            }}
-          >
-            patchwork
-          </Link>
-          <span style={{ color: "var(--color-border)" }}>/</span>
-          <Link
-            href="/dashboard"
-            style={{ color: "var(--color-muted)", fontSize: 13, textDecoration: "none" }}
-          >
-            Dashboard
-          </Link>
-          <span style={{ color: "var(--color-border)" }}>/</span>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: 13 }}>
-            {repo.fullName}
-          </span>
-        </div>
-        <div style={{ display: "flex", gap: 10 }}>
-          <a
-            href={`https://github.com/${repo.fullName}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              color: "var(--color-muted)",
-              fontSize: 12,
-              textDecoration: "none",
-              border: "1px solid var(--color-border)",
-              padding: "5px 10px",
-              borderRadius: 6,
-            }}
-          >
-            View on GitHub →
-          </a>
-          <a
-            href={`/log/${repo.owner}/${repo.name}`}
-            target="_blank"
-            style={{
-              color: "var(--color-blue-light)",
-              fontSize: 12,
-              textDecoration: "none",
-              border: "1px solid var(--color-blue)",
-              padding: "5px 10px",
-              borderRadius: 6,
-            }}
-          >
-            Public Page →
-          </a>
-        </div>
-      </header>
+        GitHub ↗
+      </a>
+      <a
+        href={`/log/${repo.owner}/${repo.name}`}
+        target="_blank"
+        style={{
+          color: "var(--color-blue-light)",
+          fontSize: 13,
+          textDecoration: "none",
+          border: "1px solid var(--color-blue)",
+          padding: "6px 12px",
+          borderRadius: 8,
+          fontFamily: "var(--font-poppins, sans-serif)",
+        }}
+      >
+        Public page ↗
+      </a>
+    </div>
+  )
 
-      <main style={{ maxWidth: 840, margin: "0 auto", padding: "40px 24px" }}>
+  return (
+    <div style={{ minHeight: "100vh", background: "var(--color-canvas)" }}>
+      <AppNav
+        crumbs={[
+          { label: "Dashboard", href: "/dashboard" },
+          { label: repo.fullName },
+        ]}
+        rightSlot={rightSlot}
+      />
+
+      <main style={{ maxWidth: 860, margin: "0 auto", padding: "48px 24px" }}>
         {/* Repo header */}
-        <div style={{ marginBottom: 32 }}>
+        <div style={{ marginBottom: 36 }}>
           <h1
             style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: 22,
+              fontFamily: "var(--font-poppins, sans-serif)",
+              fontSize: 24,
               fontWeight: 700,
-              margin: 0,
+              margin: "0 0 6px",
+              letterSpacing: "-0.02em",
+              color: "var(--color-fg)",
             }}
           >
             {repo.fullName}
           </h1>
           {repo.description && (
-            <p style={{ color: "var(--color-muted)", marginTop: 8, fontSize: 14 }}>
+            <p
+              style={{
+                color: "var(--color-muted)",
+                marginTop: 6,
+                fontSize: 15,
+                lineHeight: 1.65,
+                fontFamily: "var(--font-poppins, sans-serif)",
+              }}
+            >
               {repo.description}
             </p>
           )}
           {repo.lastSyncedAt && (
-            <p style={{ color: "var(--color-muted)", fontSize: 12, marginTop: 4 }}>
+            <p style={{ color: "var(--color-muted)", fontSize: 13, marginTop: 6, fontFamily: "var(--font-poppins, sans-serif)" }}>
               Last synced{" "}
               {new Date(repo.lastSyncedAt).toLocaleDateString("en-US", {
-                month: "short",
+                month: "long",
                 day: "numeric",
                 year: "numeric",
               })}
@@ -129,7 +115,37 @@ export default async function RepoPage({
         </div>
 
         {/* Generate */}
-        <div style={{ marginBottom: 32 }}>
+        <div
+          style={{
+            background: "var(--color-surface)",
+            border: "1px solid var(--color-border)",
+            borderRadius: 14,
+            padding: "24px",
+            marginBottom: 28,
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: "var(--font-poppins, sans-serif)",
+              fontSize: 16,
+              fontWeight: 600,
+              margin: "0 0 6px",
+              color: "var(--color-fg)",
+            }}
+          >
+            Generate changelog
+          </h2>
+          <p
+            style={{
+              fontFamily: "var(--font-poppins, sans-serif)",
+              color: "var(--color-muted)",
+              fontSize: 14,
+              margin: "0 0 16px",
+              lineHeight: 1.6,
+            }}
+          >
+            Fetches the last 50 commits and categorizes them using AI into features, fixes, refactors, and breaking changes.
+          </p>
           <GenerateForm repoId={repo.id} />
         </div>
 
@@ -138,26 +154,46 @@ export default async function RepoPage({
           style={{
             background: "var(--color-surface)",
             border: "1px solid var(--color-border)",
-            borderRadius: 8,
-            padding: "16px 20px",
+            borderRadius: 14,
+            padding: "20px 24px",
             marginBottom: 32,
           }}
         >
-          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 10 }}>
+          <div
+            style={{
+              fontSize: 14,
+              fontWeight: 600,
+              marginBottom: 4,
+              fontFamily: "var(--font-poppins, sans-serif)",
+              color: "var(--color-fg)",
+            }}
+          >
             Embed widget
           </div>
+          <p
+            style={{
+              fontFamily: "var(--font-poppins, sans-serif)",
+              color: "var(--color-muted)",
+              fontSize: 13,
+              margin: "0 0 12px",
+              lineHeight: 1.6,
+            }}
+          >
+            Paste this snippet anywhere on your site to show a live changelog.
+          </p>
           <code
             style={{
               display: "block",
-              fontFamily: "var(--font-mono)",
+              fontFamily: "ui-monospace, monospace",
               fontSize: 12,
               color: "var(--color-muted)",
               background: "var(--color-canvas)",
               border: "1px solid var(--color-border-muted)",
-              borderRadius: 4,
-              padding: "10px 14px",
+              borderRadius: 8,
+              padding: "12px 16px",
               whiteSpace: "pre-wrap",
               wordBreak: "break-all",
+              lineHeight: 1.6,
             }}
           >
             {`<iframe src="${process.env.NEXT_PUBLIC_APP_URL}/embed/${repo.owner}/${repo.name}" width="100%" height="600" frameborder="0"></iframe>`}
@@ -166,14 +202,24 @@ export default async function RepoPage({
 
         {/* Changelogs */}
         <div>
-          <h2 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>
+          <h2
+            style={{
+              fontFamily: "var(--font-poppins, sans-serif)",
+              fontSize: 18,
+              fontWeight: 600,
+              marginBottom: 18,
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              color: "var(--color-fg)",
+            }}
+          >
             Changelogs
             <span
               style={{
                 color: "var(--color-muted)",
-                fontSize: 13,
+                fontSize: 14,
                 fontWeight: 400,
-                marginLeft: 8,
               }}
             >
               {repo.changelogs.length}
@@ -184,14 +230,16 @@ export default async function RepoPage({
             <div
               style={{
                 textAlign: "center",
-                padding: "40px 24px",
+                padding: "60px 24px",
                 border: "1px dashed var(--color-border)",
-                borderRadius: 8,
+                borderRadius: 14,
                 color: "var(--color-muted)",
-                fontSize: 13,
+                fontSize: 15,
+                lineHeight: 1.7,
+                fontFamily: "var(--font-poppins, sans-serif)",
               }}
             >
-              No changelogs yet. Click Generate above to create your first one.
+              No changelogs yet. Click <strong>Generate changelog</strong> above to create your first one.
             </div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>

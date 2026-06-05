@@ -42,34 +42,47 @@ export default async function SingleChangelogPage({
   if (!changelog) notFound();
 
   return (
-    <div style={{ minHeight: "100vh" }}>
+    <div style={{ minHeight: "100vh", background: "var(--color-canvas)" }}>
+      {/* Header */}
       <header
         style={{
           borderBottom: "1px solid var(--color-border)",
           padding: "0 24px",
-          height: 56,
+          height: 60,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          position: "sticky",
+          top: 0,
+          background: "rgba(13,17,23,0.92)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          zIndex: 50,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <Link
             href="/"
             style={{
-              fontFamily: "var(--font-mono)",
+              fontFamily: "var(--font-poppins, sans-serif)",
               fontWeight: 700,
-              fontSize: 16,
+              fontSize: 17,
               textDecoration: "none",
               color: "var(--color-fg)",
+              letterSpacing: "-0.03em",
             }}
           >
             patchwork
           </Link>
-          <span style={{ color: "var(--color-border)" }}>/</span>
+          <span style={{ color: "var(--color-border)", fontSize: 16 }}>/</span>
           <Link
             href={`/log/${owner}/${repo}`}
-            style={{ color: "var(--color-muted)", fontSize: 13, textDecoration: "none" }}
+            style={{
+              color: "var(--color-muted)",
+              fontSize: 14,
+              textDecoration: "none",
+              fontFamily: "var(--font-poppins, sans-serif)",
+            }}
           >
             {fullName}
           </Link>
@@ -80,22 +93,31 @@ export default async function SingleChangelogPage({
           rel="noopener noreferrer"
           style={{
             color: "var(--color-muted)",
-            fontSize: 12,
+            fontSize: 13,
             textDecoration: "none",
             border: "1px solid var(--color-border)",
-            padding: "5px 10px",
-            borderRadius: 6,
+            padding: "5px 12px",
+            borderRadius: 8,
+            fontFamily: "var(--font-poppins, sans-serif)",
           }}
         >
           View diff on GitHub →
         </a>
       </header>
 
-      <main style={{ maxWidth: 760, margin: "0 auto", padding: "48px 24px" }}>
+      <main style={{ maxWidth: 760, margin: "0 auto", padding: "52px 24px" }}>
         <div style={{ marginBottom: 32 }}>
           <Link
             href={`/log/${owner}/${repo}`}
-            style={{ color: "var(--color-blue-light)", fontSize: 13, textDecoration: "none" }}
+            style={{
+              color: "var(--color-blue-light)",
+              fontSize: 14,
+              textDecoration: "none",
+              fontFamily: "var(--font-poppins, sans-serif)",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 4,
+            }}
           >
             ← All changelogs
           </Link>
@@ -111,14 +133,15 @@ export default async function SingleChangelogPage({
 
         {/* Raw commits */}
         {Array.isArray(changelog.rawCommits) && (changelog.rawCommits as unknown as RawCommit[]).length > 0 && (
-          <details style={{ marginTop: 24 }}>
+          <details style={{ marginTop: 28 }}>
             <summary
               style={{
                 cursor: "pointer",
                 color: "var(--color-muted)",
-                fontSize: 13,
+                fontSize: 14,
                 padding: "10px 0",
                 userSelect: "none",
+                fontFamily: "var(--font-poppins, sans-serif)",
               }}
             >
               {(changelog.rawCommits as unknown as RawCommit[]).length} raw commits
@@ -127,8 +150,8 @@ export default async function SingleChangelogPage({
               style={{
                 background: "var(--color-surface)",
                 border: "1px solid var(--color-border)",
-                borderRadius: 6,
-                marginTop: 8,
+                borderRadius: 10,
+                marginTop: 10,
                 overflow: "hidden",
               }}
             >
@@ -136,13 +159,13 @@ export default async function SingleChangelogPage({
                 <div
                   key={c.sha}
                   style={{
-                    padding: "10px 16px",
+                    padding: "12px 18px",
                     borderBottom:
                       i < (changelog.rawCommits as unknown as RawCommit[]).length - 1
                         ? "1px solid var(--color-border-muted)"
                         : "none",
                     display: "flex",
-                    gap: 12,
+                    gap: 14,
                     alignItems: "flex-start",
                   }}
                 >
@@ -151,8 +174,8 @@ export default async function SingleChangelogPage({
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: 11,
+                      fontFamily: "ui-monospace, monospace",
+                      fontSize: 12,
                       color: "var(--color-blue-light)",
                       textDecoration: "none",
                       whiteSpace: "nowrap",
@@ -162,14 +185,29 @@ export default async function SingleChangelogPage({
                     {c.sha.slice(0, 7)}
                   </a>
                   <div>
-                    <div style={{ fontSize: 13, lineHeight: 1.5 }}>
+                    <div
+                      style={{
+                        fontSize: 14,
+                        lineHeight: 1.55,
+                        fontFamily: "var(--font-poppins, sans-serif)",
+                        color: "var(--color-fg)",
+                      }}
+                    >
                       {c.message.split("\n")[0]}
                     </div>
-                    <div style={{ fontSize: 11, color: "var(--color-muted)", marginTop: 2 }}>
+                    <div
+                      style={{
+                        fontSize: 12,
+                        color: "var(--color-muted)",
+                        marginTop: 3,
+                        fontFamily: "var(--font-poppins, sans-serif)",
+                      }}
+                    >
                       {c.author} ·{" "}
                       {new Date(c.date).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
+                        year: "numeric",
                       })}
                     </div>
                   </div>
@@ -181,8 +219,8 @@ export default async function SingleChangelogPage({
 
         <div
           style={{
-            marginTop: 32,
-            padding: "16px 0",
+            marginTop: 40,
+            padding: "20px 0",
             borderTop: "1px solid var(--color-border)",
             display: "flex",
             justifyContent: "space-between",
@@ -191,13 +229,18 @@ export default async function SingleChangelogPage({
         >
           <Link
             href={`/log/${owner}/${repo}`}
-            style={{ color: "var(--color-muted)", fontSize: 13, textDecoration: "none" }}
+            style={{
+              color: "var(--color-muted)",
+              fontSize: 14,
+              textDecoration: "none",
+              fontFamily: "var(--font-poppins, sans-serif)",
+            }}
           >
             ← Back to all changelogs
           </Link>
-          <span style={{ color: "var(--color-muted)", fontSize: 12 }}>
-            Powered by{" "}
-            <Link href="/" style={{ color: "var(--color-blue-light)" }}>
+          <span style={{ color: "var(--color-muted)", fontSize: 13, fontFamily: "var(--font-poppins, sans-serif)" }}>
+            Generated by{" "}
+            <Link href="/" style={{ color: "var(--color-blue-light)", textDecoration: "none" }}>
               Patchwork
             </Link>
           </span>

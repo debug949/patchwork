@@ -16,31 +16,43 @@ export default async function LoginPage() {
         alignItems: "center",
         justifyContent: "center",
         padding: 24,
+        background: "var(--color-canvas)",
       }}
     >
       <div
         style={{
           background: "var(--color-surface)",
           border: "1px solid var(--color-border)",
-          borderRadius: 12,
-          padding: "40px",
-          maxWidth: 360,
+          borderRadius: 16,
+          padding: "48px 40px",
+          maxWidth: 380,
           width: "100%",
           textAlign: "center",
         }}
       >
+        {/* Logo */}
         <div
           style={{
-            fontFamily: "var(--font-mono)",
+            fontFamily: "var(--font-poppins, sans-serif)",
             fontWeight: 700,
-            fontSize: 22,
-            marginBottom: 8,
+            fontSize: 26,
+            marginBottom: 6,
+            letterSpacing: "-0.04em",
+            color: "var(--color-fg)",
           }}
         >
           patchwork
         </div>
-        <p style={{ color: "var(--color-muted)", marginBottom: 32, fontSize: 14 }}>
-          Sign in to generate changelogs from your GitHub repos.
+        <p
+          style={{
+            fontFamily: "var(--font-poppins, sans-serif)",
+            color: "var(--color-muted)",
+            marginBottom: 36,
+            fontSize: 15,
+            lineHeight: 1.6,
+          }}
+        >
+          Generate AI-powered changelogs from your GitHub commit history.
         </p>
 
         <a
@@ -52,11 +64,12 @@ export default async function LoginPage() {
             gap: 10,
             background: "var(--color-fg)",
             color: "var(--color-canvas)",
-            padding: "11px 20px",
-            borderRadius: 8,
+            padding: "13px 20px",
+            borderRadius: 10,
             textDecoration: "none",
             fontWeight: 600,
-            fontSize: 14,
+            fontSize: 15,
+            fontFamily: "var(--font-poppins, sans-serif)",
             transition: "opacity 0.15s",
           }}
         >
@@ -64,9 +77,16 @@ export default async function LoginPage() {
           Continue with GitHub
         </a>
 
-        <p style={{ color: "var(--color-muted)", fontSize: 12, marginTop: 24, lineHeight: 1.6 }}>
-          Patchwork requests read access to your repositories to fetch commit history.
-          No write access is requested.
+        <p
+          style={{
+            fontFamily: "var(--font-poppins, sans-serif)",
+            color: "var(--color-muted)",
+            fontSize: 13,
+            marginTop: 24,
+            lineHeight: 1.7,
+          }}
+        >
+          Patchwork requests <strong>read-only</strong> access to your repositories to fetch commit history. No write access is requested.
         </p>
       </div>
     </div>
