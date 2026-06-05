@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                String       @id @default(cuid())
+  githubId          String       @unique
+  githubLogin       String
+  githubName        String?
+  githubAvatarUrl   String?
+  githubAccessToken String
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  repositories      Repository[]
+}
+
+model Repository {
+  id           String      @id @default(cuid())
+  userId       String
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  owner        String
+  name         String
+  fullName     String
+  description  String?
+  isPrivate    Boolean     @default(false)
+  lastSyncedAt DateTime?
+  createdAt    DateTime    @default(now())
+  changelogs   Changelog[]
+
+  @@unique([userId, fullName])
+}
+
+model Changelog {
+  id           String     @id @default(cuid())
+  repositoryId String
+  repository   Repository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+  title        String
+  version      String?
+  fromSha      String?
+  toSha        String?
+  commitCount  Int        @default(0)
+  content      Json
+  rawCommits   Json       @default("[]")
+  isPublished  Boolean    @default(true)
+  slug         String     @unique @default(cuid())
+  createdAt    DateTime   @default(now())
+}
