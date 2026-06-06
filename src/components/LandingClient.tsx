@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from "react"
 import Link from "next/link"
-import { Globe, ArrowRight, Music2, Send } from "lucide-react"
+import { Globe, ArrowRight } from "lucide-react"
 import { AboutSection } from "./AboutSection"
 import { FeaturedVideoSection } from "./FeaturedVideoSection"
 import { PhilosophySection } from "./PhilosophySection"
@@ -80,11 +80,14 @@ export function LandingClient({ isLoggedIn }: Props) {
           autoPlay
           playsInline
           preload="auto"
-          style={{ opacity: 0 }}
+          style={{ opacity: 0, filter: "blur(14px) brightness(0.38) scale(1.06)" }}
           className="absolute inset-0 w-full h-full object-cover object-bottom"
+          onMouseEnter={undefined}
         >
           <source src={HERO_VIDEO} type="video/mp4" />
         </video>
+        {/* subtle gradient to ground the content */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60 pointer-events-none" />
 
         {/* Navbar */}
         <div className="relative z-20 px-6 py-6">
@@ -124,55 +127,41 @@ export function LandingClient({ isLoggedIn }: Props) {
         </div>
 
         {/* Hero content */}
-        <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-12 text-center -translate-y-[20%]">
+        <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-12 text-center">
+          <p
+            className="text-white/40 text-xs tracking-[0.18em] uppercase mb-8"
+            style={{ fontFamily: "var(--font-poppins, sans-serif)" }}
+          >
+            AI-powered changelogs
+          </p>
+
           <h1
-            className="text-7xl md:text-8xl lg:text-9xl text-white tracking-tight whitespace-nowrap"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
+            className="text-6xl md:text-8xl lg:text-9xl text-white tracking-tight"
+            style={{ fontFamily: "'Instrument Serif', serif", lineHeight: 1.05 }}
           >
             Document it <em className="italic">all.</em>
           </h1>
 
-          {/* Email input */}
-          <div className="max-w-xl w-full mt-10">
-            <div className="liquid-glass rounded-full pl-6 pr-2 py-2 flex items-center gap-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 bg-transparent text-white placeholder:text-white/40 text-sm outline-none"
-                style={{ fontFamily: "var(--font-poppins, sans-serif)" }}
-              />
-              <button className="bg-white rounded-full p-3 text-black flex-shrink-0">
-                <ArrowRight size={20} />
-              </button>
-            </div>
-          </div>
-
           <p
-            className="text-white text-sm leading-relaxed px-4 mt-6 max-w-md"
+            className="text-white/40 text-sm leading-relaxed mt-7 max-w-xs"
             style={{ fontFamily: "var(--font-poppins, sans-serif)" }}
           >
-            Connect your GitHub repositories and let Patchwork generate beautiful, AI-powered changelogs your users will actually read.
+            Connect GitHub. Ship changelogs your users will actually read.
           </p>
 
           <Link
             href={isLoggedIn ? "/dashboard" : "/login"}
-            className="liquid-glass rounded-full px-8 py-3 text-white text-sm font-medium hover:bg-white/5 transition-colors mt-6"
+            className="flex items-center gap-2 mt-10 bg-white text-black rounded-full px-7 py-3 text-sm font-medium hover:opacity-90 transition-opacity"
             style={{ fontFamily: "var(--font-poppins, sans-serif)" }}
           >
-            Start for free
+            {isLoggedIn ? "Open dashboard" : "Get started"}
+            <ArrowRight size={16} />
           </Link>
         </div>
 
-        {/* Social icons */}
-        <div className="relative z-10 flex justify-center gap-4 pb-12">
-          {[Music2, Send, Globe].map((Icon, i) => (
-            <button
-              key={i}
-              className="liquid-glass rounded-full p-4 text-white/80 hover:text-white hover:bg-white/5 transition-all"
-            >
-              <Icon size={20} />
-            </button>
-          ))}
+        {/* Scroll hint */}
+        <div className="relative z-10 flex justify-center pb-10">
+          <div className="w-px h-10 bg-gradient-to-b from-white/20 to-transparent" />
         </div>
       </div>
 

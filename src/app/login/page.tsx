@@ -3,73 +3,92 @@ import { requireSession } from "@/lib/session";
 
 export const metadata = { title: "Sign in — Patchwork" };
 
+const VIDEO_URL =
+  "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_074625_a81f018a-956b-43fb-9aee-4d1508e30e6a.mp4"
+
 export default async function LoginPage() {
   const session = await requireSession();
   if (session) redirect("/dashboard");
 
-  const VIDEO_URL =
-    "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260315_073750_51473149-4350-4920-ae24-c8214286f323.mp4"
-
   return (
-    <div style={{ minHeight: "100vh", background: "#000", position: "relative" }}>
-      {/* Video background */}
-      <div style={{ position: "fixed", inset: 0, zIndex: 0, overflow: "hidden" }}>
+    <div style={{ minHeight: "100vh", background: "#000", position: "relative", overflow: "hidden" }}>
+      {/* Blurry video background — same as landing */}
+      <div style={{ position: "fixed", inset: 0, zIndex: 0 }}>
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-        <video autoPlay muted loop playsInline preload="metadata"
-          style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }}>
+        <video
+          autoPlay muted loop playsInline preload="auto"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            position: "absolute",
+            inset: 0,
+            filter: "blur(14px) brightness(0.38)",
+            transform: "scale(1.06)",
+          }}
+        >
           <source src={VIDEO_URL} type="video/mp4" />
         </video>
-        <div style={{ position: "absolute", inset: 0, background: "rgba(5,8,12,0.45)" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 40%, rgba(0,0,0,0.6) 100%)" }} />
       </div>
 
       {/* Content */}
       <div
         style={{
           position: "relative",
-          zIndex: 10,
+          zIndex: 1,
           minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          padding: 24,
+          padding: "0 24px",
         }}
       >
-      <div
-        className="liquid-glass-strong"
-        style={{
-          borderRadius: 24,
-          padding: "48px 40px",
-          maxWidth: 380,
-          width: "100%",
-          textAlign: "center",
-        }}
-      >
-        {/* Logo */}
+        {/* Logo mark */}
         <div
           style={{
             fontFamily: "var(--font-poppins, sans-serif)",
             fontWeight: 700,
-            fontSize: 26,
-            marginBottom: 6,
-            letterSpacing: "-0.04em",
-            color: "#fff",
+            fontSize: 15,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.4)",
+            marginBottom: 40,
           }}
         >
           patchwork
         </div>
+
+        {/* Heading */}
+        <h1
+          style={{
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: "clamp(42px, 8vw, 72px)",
+            color: "#fff",
+            margin: "0 0 12px",
+            textAlign: "center",
+            lineHeight: 1.05,
+            letterSpacing: "-0.01em",
+          }}
+        >
+          Welcome back.
+        </h1>
+
         <p
           style={{
             fontFamily: "var(--font-poppins, sans-serif)",
-            color: "rgba(255,255,255,0.5)",
-            marginBottom: 36,
+            color: "rgba(255,255,255,0.4)",
             fontSize: 15,
+            margin: "0 0 48px",
+            textAlign: "center",
             lineHeight: 1.6,
           }}
         >
-          Generate AI-powered changelogs from your GitHub commit history.
+          Sign in to generate and manage your changelogs.
         </p>
 
+        {/* GitHub button */}
         <a
           href="/api/auth/github"
           style={{
@@ -77,33 +96,39 @@ export default async function LoginPage() {
             alignItems: "center",
             justifyContent: "center",
             gap: 10,
-            background: "#fff",
-            color: "#000",
-            padding: "13px 20px",
-            borderRadius: 10,
+            background: "rgba(255,255,255,0.08)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            border: "1px solid rgba(255,255,255,0.14)",
+            color: "#fff",
+            padding: "14px 32px",
+            borderRadius: 100,
             textDecoration: "none",
-            fontWeight: 600,
+            fontWeight: 500,
             fontSize: 15,
             fontFamily: "var(--font-poppins, sans-serif)",
-            transition: "opacity 0.15s",
+            transition: "background 0.2s, border-color 0.2s",
+            minWidth: 240,
           }}
         >
           <GitHubIcon />
           Continue with GitHub
         </a>
 
+        {/* Fine print */}
         <p
           style={{
             fontFamily: "var(--font-poppins, sans-serif)",
-            color: "rgba(255,255,255,0.5)",
-            fontSize: 13,
-            marginTop: 24,
+            color: "rgba(255,255,255,0.2)",
+            fontSize: 12,
+            marginTop: 28,
+            textAlign: "center",
             lineHeight: 1.7,
+            maxWidth: 300,
           }}
         >
-          Patchwork requests <strong>read-only</strong> access to your repositories to fetch commit history. No write access is requested.
+          Read-only access to your repositories. No write permissions.
         </p>
-      </div>
       </div>
     </div>
   );
