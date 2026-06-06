@@ -27,7 +27,7 @@ export default async function DashboardPage() {
           style={{ width: 30, height: 30, borderRadius: "50%", border: "1px solid var(--color-border)" }}
         />
       )}
-      <span style={{ color: "var(--color-muted)", fontSize: 14, fontFamily: "var(--font-poppins, sans-serif)" }}>
+      <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 14, fontFamily: "var(--font-poppins, sans-serif)" }}>
         {session.githubLogin}
       </span>
       <form action="/api/auth/logout" method="POST">
@@ -35,8 +35,8 @@ export default async function DashboardPage() {
           type="submit"
           style={{
             background: "none",
-            border: "1px solid var(--color-border)",
-            color: "var(--color-muted)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            color: "rgba(255,255,255,0.5)",
             padding: "5px 14px",
             borderRadius: 8,
             cursor: "pointer",
@@ -87,14 +87,14 @@ export default async function DashboardPage() {
                 margin: "0 0 6px",
                 letterSpacing: "-0.02em",
                 fontFamily: "var(--font-poppins, sans-serif)",
-                color: "var(--color-fg)",
+                color: "#fff",
               }}
             >
               Your repositories
             </h1>
             <p
               style={{
-                color: "var(--color-muted)",
+                color: "rgba(255,255,255,0.5)",
                 fontSize: 15,
                 marginTop: 0,
                 lineHeight: 1.6,
@@ -136,7 +136,7 @@ export default async function DashboardPage() {
                       fontFamily: "var(--font-poppins, sans-serif)",
                       fontWeight: 600,
                       fontSize: 15,
-                      color: "var(--color-fg)",
+                      color: "#fff",
                       marginBottom: repo.description ? 4 : 0,
                     }}
                   >
@@ -145,7 +145,7 @@ export default async function DashboardPage() {
                   {repo.description && (
                     <div
                       style={{
-                        color: "var(--color-muted)",
+                        color: "rgba(255,255,255,0.5)",
                         fontSize: 14,
                         lineHeight: 1.5,
                         fontFamily: "var(--font-poppins, sans-serif)",
@@ -160,8 +160,8 @@ export default async function DashboardPage() {
                     <span
                       style={{
                         fontSize: 12,
-                        color: "var(--color-muted)",
-                        border: "1px solid var(--color-border)",
+                        color: "rgba(255,255,255,0.5)",
+                        border: "1px solid rgba(255,255,255,0.08)",
                         borderRadius: 6,
                         padding: "2px 8px",
                         fontFamily: "var(--font-poppins, sans-serif)",
@@ -170,10 +170,10 @@ export default async function DashboardPage() {
                       private
                     </span>
                   )}
-                  <span style={{ color: "var(--color-muted)", fontSize: 14, fontFamily: "var(--font-poppins, sans-serif)" }}>
+                  <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 14, fontFamily: "var(--font-poppins, sans-serif)" }}>
                     {repo._count.changelogs} changelog{repo._count.changelogs !== 1 ? "s" : ""}
                   </span>
-                  <span style={{ color: "var(--color-muted)", fontSize: 18 }}>→</span>
+                  <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 18 }}>→</span>
                 </div>
               </Link>
             ))}
@@ -202,14 +202,14 @@ function EmptyState() {
           fontSize: 18,
           marginBottom: 10,
           fontFamily: "var(--font-poppins, sans-serif)",
-          color: "var(--color-fg)",
+          color: "#fff",
         }}
       >
         No repositories connected yet
       </div>
       <div
         style={{
-          color: "var(--color-muted)",
+          color: "rgba(255,255,255,0.5)",
           fontSize: 15,
           lineHeight: 1.7,
           maxWidth: 360,

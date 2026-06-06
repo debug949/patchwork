@@ -53,7 +53,7 @@ export default async function LoginPage() {
             fontSize: 26,
             marginBottom: 6,
             letterSpacing: "-0.04em",
-            color: "var(--color-fg)",
+            color: "#fff",
           }}
         >
           patchwork
@@ -61,7 +61,7 @@ export default async function LoginPage() {
         <p
           style={{
             fontFamily: "var(--font-poppins, sans-serif)",
-            color: "var(--color-muted)",
+            color: "rgba(255,255,255,0.5)",
             marginBottom: 36,
             fontSize: 15,
             lineHeight: 1.6,
@@ -77,8 +77,8 @@ export default async function LoginPage() {
             alignItems: "center",
             justifyContent: "center",
             gap: 10,
-            background: "var(--color-fg)",
-            color: "var(--color-canvas)",
+            background: "#fff",
+            color: "#000",
             padding: "13px 20px",
             borderRadius: 10,
             textDecoration: "none",
@@ -95,7 +95,7 @@ export default async function LoginPage() {
         <p
           style={{
             fontFamily: "var(--font-poppins, sans-serif)",
-            color: "var(--color-muted)",
+            color: "rgba(255,255,255,0.5)",
             fontSize: 13,
             marginTop: 24,
             lineHeight: 1.7,

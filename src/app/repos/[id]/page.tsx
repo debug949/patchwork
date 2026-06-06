@@ -35,10 +35,10 @@ export default async function RepoPage({
         target="_blank"
         rel="noopener noreferrer"
         style={{
-          color: "var(--color-muted)",
+          color: "rgba(255,255,255,0.5)",
           fontSize: 13,
           textDecoration: "none",
-          border: "1px solid var(--color-border)",
+          border: "1px solid rgba(255,255,255,0.08)",
           padding: "6px 12px",
           borderRadius: 8,
           fontFamily: "var(--font-poppins, sans-serif)",
@@ -50,10 +50,10 @@ export default async function RepoPage({
         href={`/log/${repo.owner}/${repo.name}`}
         target="_blank"
         style={{
-          color: "var(--color-blue-light)",
+          color: "rgba(255,255,255,0.8)",
           fontSize: 13,
           textDecoration: "none",
-          border: "1px solid var(--color-blue)",
+          border: "1px solid rgba(255,255,255,0.15)",
           padding: "6px 12px",
           borderRadius: 8,
           fontFamily: "var(--font-poppins, sans-serif)",
@@ -97,7 +97,7 @@ export default async function RepoPage({
               fontWeight: 700,
               margin: "0 0 6px",
               letterSpacing: "-0.02em",
-              color: "var(--color-fg)",
+              color: "#fff",
             }}
           >
             {repo.fullName}
@@ -105,7 +105,7 @@ export default async function RepoPage({
           {repo.description && (
             <p
               style={{
-                color: "var(--color-muted)",
+                color: "rgba(255,255,255,0.5)",
                 marginTop: 6,
                 fontSize: 15,
                 lineHeight: 1.65,
@@ -116,7 +116,7 @@ export default async function RepoPage({
             </p>
           )}
           {repo.lastSyncedAt && (
-            <p style={{ color: "var(--color-muted)", fontSize: 13, marginTop: 6, fontFamily: "var(--font-poppins, sans-serif)" }}>
+            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 13, marginTop: 6, fontFamily: "var(--font-poppins, sans-serif)" }}>
               Last synced{" "}
               {new Date(repo.lastSyncedAt).toLocaleDateString("en-US", {
                 month: "long",
@@ -142,7 +142,7 @@ export default async function RepoPage({
               fontSize: 16,
               fontWeight: 600,
               margin: "0 0 6px",
-              color: "var(--color-fg)",
+              color: "#fff",
             }}
           >
             Generate changelog
@@ -150,7 +150,7 @@ export default async function RepoPage({
           <p
             style={{
               fontFamily: "var(--font-poppins, sans-serif)",
-              color: "var(--color-muted)",
+              color: "rgba(255,255,255,0.5)",
               fontSize: 14,
               margin: "0 0 16px",
               lineHeight: 1.6,
@@ -176,7 +176,7 @@ export default async function RepoPage({
               fontWeight: 600,
               marginBottom: 4,
               fontFamily: "var(--font-poppins, sans-serif)",
-              color: "var(--color-fg)",
+              color: "#fff",
             }}
           >
             Embed widget
@@ -184,7 +184,7 @@ export default async function RepoPage({
           <p
             style={{
               fontFamily: "var(--font-poppins, sans-serif)",
-              color: "var(--color-muted)",
+              color: "rgba(255,255,255,0.5)",
               fontSize: 13,
               margin: "0 0 12px",
               lineHeight: 1.6,
@@ -197,8 +197,8 @@ export default async function RepoPage({
               display: "block",
               fontFamily: "ui-monospace, monospace",
               fontSize: 12,
-              color: "var(--color-muted)",
-              background: "var(--color-canvas)",
+              color: "rgba(255,255,255,0.5)",
+              background: "rgba(0,0,0,0.6)",
               border: "1px solid var(--color-border-muted)",
               borderRadius: 8,
               padding: "12px 16px",
@@ -222,13 +222,13 @@ export default async function RepoPage({
               display: "flex",
               alignItems: "center",
               gap: 10,
-              color: "var(--color-fg)",
+              color: "#fff",
             }}
           >
             Changelogs
             <span
               style={{
-                color: "var(--color-muted)",
+                color: "rgba(255,255,255,0.5)",
                 fontSize: 14,
                 fontWeight: 400,
               }}
@@ -244,7 +244,7 @@ export default async function RepoPage({
                 padding: "60px 24px",
                 border: "1px dashed var(--color-border)",
                 borderRadius: 14,
-                color: "var(--color-muted)",
+                color: "rgba(255,255,255,0.5)",
                 fontSize: 15,
                 lineHeight: 1.7,
                 fontFamily: "var(--font-poppins, sans-serif)",
