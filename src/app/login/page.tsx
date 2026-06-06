@@ -7,23 +7,38 @@ export default async function LoginPage() {
   const session = await requireSession();
   if (session) redirect("/dashboard");
 
+  const VIDEO_URL =
+    "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260315_073750_51473149-4350-4920-ae24-c8214286f323.mp4"
+
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 24,
-        background: "var(--color-canvas)",
-      }}
-    >
+    <div style={{ minHeight: "100vh", background: "#000", position: "relative" }}>
+      {/* Video background */}
+      <div style={{ position: "fixed", inset: 0, zIndex: 0, overflow: "hidden" }}>
+        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+        <video autoPlay muted loop playsInline preload="metadata"
+          style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }}>
+          <source src={VIDEO_URL} type="video/mp4" />
+        </video>
+        <div style={{ position: "absolute", inset: 0, background: "rgba(5,8,12,0.45)" }} />
+      </div>
+
+      {/* Content */}
       <div
         style={{
-          background: "var(--color-surface)",
-          border: "1px solid var(--color-border)",
-          borderRadius: 16,
+          position: "relative",
+          zIndex: 10,
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 24,
+        }}
+      >
+      <div
+        className="liquid-glass-strong"
+        style={{
+          borderRadius: 24,
           padding: "48px 40px",
           maxWidth: 380,
           width: "100%",
@@ -88,6 +103,7 @@ export default async function LoginPage() {
         >
           Patchwork requests <strong>read-only</strong> access to your repositories to fetch commit history. No write access is requested.
         </p>
+      </div>
       </div>
     </div>
   );

@@ -13,8 +13,9 @@ interface AppNavProps {
 export function AppNav({ crumbs = [], rightSlot }: AppNavProps) {
   return (
     <header
+      className="liquid-glass"
       style={{
-        borderBottom: "1px solid var(--color-border)",
+        borderBottom: "1px solid rgba(255,255,255,0.07)",
         padding: "0 24px",
         height: 60,
         display: "flex",
@@ -23,9 +24,9 @@ export function AppNav({ crumbs = [], rightSlot }: AppNavProps) {
         position: "sticky",
         top: 0,
         zIndex: 50,
-        background: "rgba(13,17,23,0.92)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
+        background: "rgba(5,8,12,0.72)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
       }}
     >
       {/* Left: logo + breadcrumbs */}

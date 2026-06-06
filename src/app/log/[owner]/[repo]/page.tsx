@@ -39,12 +39,26 @@ export default async function PublicRepoPage({
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
 
+  const VIDEO_URL =
+    "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260315_073750_51473149-4350-4920-ae24-c8214286f323.mp4"
+
   return (
-    <div style={{ minHeight: "100vh", background: "var(--color-canvas)" }}>
+    <div style={{ minHeight: "100vh", background: "#000", position: "relative" }}>
+      {/* Video background */}
+      <div style={{ position: "fixed", inset: 0, zIndex: 0, overflow: "hidden" }}>
+        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+        <video autoPlay muted loop playsInline preload="metadata"
+          style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0, filter: "brightness(0.35)" }}>
+          <source src={VIDEO_URL} type="video/mp4" />
+        </video>
+      </div>
+
+      <div style={{ position: "relative", zIndex: 1 }}>
       {/* Header */}
       <header
+        className="liquid-glass"
         style={{
-          borderBottom: "1px solid var(--color-border)",
+          borderBottom: "1px solid rgba(255,255,255,0.07)",
           padding: "0 24px",
           height: 60,
           display: "flex",
@@ -52,9 +66,9 @@ export default async function PublicRepoPage({
           justifyContent: "space-between",
           position: "sticky",
           top: 0,
-          background: "rgba(13,17,23,0.92)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
+          background: "rgba(5,8,12,0.72)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
           zIndex: 50,
         }}
       >
@@ -199,6 +213,7 @@ export default async function PublicRepoPage({
           </div>
         )}
       </main>
+      </div>
     </div>
   );
 }

@@ -64,8 +64,21 @@ export default async function RepoPage({
     </div>
   )
 
+  const VIDEO_URL =
+    "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260315_073750_51473149-4350-4920-ae24-c8214286f323.mp4"
+
   return (
-    <div style={{ minHeight: "100vh", background: "var(--color-canvas)" }}>
+    <div style={{ minHeight: "100vh", background: "#000", position: "relative" }}>
+      {/* Video background */}
+      <div style={{ position: "fixed", inset: 0, zIndex: 0, overflow: "hidden" }}>
+        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+        <video autoPlay muted loop playsInline preload="metadata"
+          style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0, filter: "brightness(0.35)" }}>
+          <source src={VIDEO_URL} type="video/mp4" />
+        </video>
+      </div>
+
+      <div style={{ position: "relative", zIndex: 1 }}>
       <AppNav
         crumbs={[
           { label: "Dashboard", href: "/dashboard" },
@@ -116,9 +129,8 @@ export default async function RepoPage({
 
         {/* Generate */}
         <div
+          className="liquid-glass"
           style={{
-            background: "var(--color-surface)",
-            border: "1px solid var(--color-border)",
             borderRadius: 14,
             padding: "24px",
             marginBottom: 28,
@@ -151,9 +163,8 @@ export default async function RepoPage({
 
         {/* Embed snippet */}
         <div
+          className="liquid-glass"
           style={{
-            background: "var(--color-surface)",
-            border: "1px solid var(--color-border)",
             borderRadius: 14,
             padding: "20px 24px",
             marginBottom: 32,
@@ -261,6 +272,7 @@ export default async function RepoPage({
           )}
         </div>
       </main>
+      </div>
     </div>
   );
 }
