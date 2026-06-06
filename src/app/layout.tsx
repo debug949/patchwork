@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins, Source_Serif_4 } from "next/font/google";
+import { CustomCursor } from "@/components/CustomCursor";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -29,7 +30,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${poppins.variable} ${sourceSerif.variable}`}>
-      <body style={{ margin: 0 }}>{children}</body>
+      <body style={{ margin: 0 }}>
+        <CustomCursor />
+        {children}
+      </body>
     </html>
   );
 }
