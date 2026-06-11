@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireSession } from "@/lib/session";
 import { prisma } from "@/lib/db";
-import { getRepoCommits } from "@/lib/github";
+import { getRepoCommits, getCommitsBetweenRefs } from "@/lib/github";
 import { generateChangelog } from "@/lib/ai";
 
 export const maxDuration = 45;
@@ -27,16 +27,38 @@ export async function POST(
     since?: string;
     version?: string;
     perPage?: number;
+    fromTag?: string;
+    toTag?: string;
   };
 
   let commits;
   try {
-    commits = await getRepoCommits(
-      session.githubAccessToken,
-      repo.owner,
-      repo.name,
-      { since: body.since, perPage: body.perPage ?? 50 }
-    );
+    if (body.fromTag && body.toTag) {
+      // Both tags → compare API for exact commit range
+      commits = await getCommitsBetweenRefs(
+        session.githubAccessToken,
+        repo.owner,
+        repo.name,
+        body.fromTag,
+        body.toTag
+      );
+    } else if (body.toTag) {
+      // Only toTag → all commits up to that tag (last 50)
+      commits = await getRepoCommits(
+        session.githubAccessToken,
+        repo.owner,
+        repo.name,
+        { sha: body.toTag, perPage: 50 }
+      );
+    } else {
+      // Recent commits mode
+      commits = await getRepoCommits(
+        session.githubAccessToken,
+        repo.owner,
+        repo.name,
+        { since: body.since, perPage: body.perPage ?? 50 }
+      );
+    }
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Failed to fetch commits";
     return NextResponse.json({ error: msg }, { status: 502 });
@@ -56,15 +78,20 @@ export async function POST(
     year: "numeric",
   });
 
-  const title = body.version
-    ? `${body.version} — ${dateStr}`
-    : `${commits.length} commits through ${dateStr}`;
+  // version: explicit > toTag auto-label > null
+  const resolvedVersion = body.version ?? (body.toTag ? body.toTag : null);
+
+  const title = resolvedVersion
+    ? `${resolvedVersion} — ${dateStr}`
+    : body.fromTag && body.toTag
+      ? `${body.fromTag}…${body.toTag} — ${dateStr}`
+      : `${commits.length} commits through ${dateStr}`;
 
   const changelog = await prisma.changelog.create({
     data: {
       repositoryId: repo.id,
       title,
-      version: body.version ?? null,
+      version: resolvedVersion,
       fromSha: oldest.sha,
       toSha: newest.sha,
       commitCount: commits.length,

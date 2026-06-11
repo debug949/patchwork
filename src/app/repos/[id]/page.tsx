@@ -4,6 +4,7 @@ import { requireSession } from "@/lib/session";
 import { prisma } from "@/lib/db";
 import { GenerateForm } from "@/components/GenerateForm";
 import { ChangelogEntry } from "@/components/ChangelogEntry";
+import { CopyEmbedButton } from "@/components/CopyEmbedButton";
 import { AppNav } from "@/components/AppNav";
 import type { ChangelogContent } from "@/lib/ai";
 
@@ -141,23 +142,12 @@ export default async function RepoPage({
               fontFamily: "var(--font-poppins, sans-serif)",
               fontSize: 16,
               fontWeight: 600,
-              margin: "0 0 6px",
+              margin: "0 0 16px",
               color: "#fff",
             }}
           >
             Generate changelog
           </h2>
-          <p
-            style={{
-              fontFamily: "var(--font-poppins, sans-serif)",
-              color: "rgba(255,255,255,0.5)",
-              fontSize: 14,
-              margin: "0 0 16px",
-              lineHeight: 1.6,
-            }}
-          >
-            Fetches the last 50 commits and categorizes them using AI into features, fixes, refactors, and breaking changes.
-          </p>
           <GenerateForm repoId={repo.id} />
         </div>
 
@@ -170,45 +160,11 @@ export default async function RepoPage({
             marginBottom: 32,
           }}
         >
-          <div
-            style={{
-              fontSize: 14,
-              fontWeight: 600,
-              marginBottom: 4,
-              fontFamily: "var(--font-poppins, sans-serif)",
-              color: "#fff",
-            }}
-          >
-            Embed widget
-          </div>
-          <p
-            style={{
-              fontFamily: "var(--font-poppins, sans-serif)",
-              color: "rgba(255,255,255,0.5)",
-              fontSize: 13,
-              margin: "0 0 12px",
-              lineHeight: 1.6,
-            }}
-          >
-            Paste this snippet anywhere on your site to show a live changelog.
-          </p>
-          <code
-            style={{
-              display: "block",
-              fontFamily: "ui-monospace, monospace",
-              fontSize: 12,
-              color: "rgba(255,255,255,0.5)",
-              background: "rgba(0,0,0,0.6)",
-              border: "1px solid var(--color-border-muted)",
-              borderRadius: 8,
-              padding: "12px 16px",
-              whiteSpace: "pre-wrap",
-              wordBreak: "break-all",
-              lineHeight: 1.6,
-            }}
-          >
-            {`<iframe src="${process.env.NEXT_PUBLIC_APP_URL}/embed/${repo.owner}/${repo.name}" width="100%" height="600" frameborder="0"></iframe>`}
-          </code>
+          <CopyEmbedButton
+            owner={repo.owner}
+            repo={repo.name}
+            appUrl={process.env.NEXT_PUBLIC_APP_URL ?? ""}
+          />
         </div>
 
         {/* Changelogs */}

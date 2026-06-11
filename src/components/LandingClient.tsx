@@ -149,14 +149,25 @@ export function LandingClient({ isLoggedIn }: Props) {
             Connect GitHub. Ship changelogs your users will actually read.
           </p>
 
-          <Link
-            href={isLoggedIn ? "/dashboard" : "/login"}
-            className="flex items-center gap-2 mt-10 bg-white text-black rounded-full px-7 py-3 text-sm font-medium hover:opacity-90 transition-opacity"
-            style={{ fontFamily: "var(--font-poppins, sans-serif)" }}
-          >
-            {isLoggedIn ? "Open dashboard" : "Get started"}
-            <ArrowRight size={16} />
-          </Link>
+          <div className="flex items-center gap-3 mt-10">
+            <Link
+              href={isLoggedIn ? "/dashboard" : "/login"}
+              className="flex items-center gap-2 bg-white text-black rounded-full px-7 py-3 text-sm font-medium hover:opacity-90 transition-opacity"
+              style={{ fontFamily: "var(--font-poppins, sans-serif)" }}
+            >
+              {isLoggedIn ? "Open dashboard" : "Get started"}
+              <ArrowRight size={16} />
+            </Link>
+            {!isLoggedIn && (
+              <Link
+                href="/demo"
+                className="flex items-center gap-2 text-white/60 hover:text-white/90 text-sm transition-colors"
+                style={{ fontFamily: "var(--font-poppins, sans-serif)" }}
+              >
+                Live demo ↗
+              </Link>
+            )}
+          </div>
         </div>
 
         {/* Scroll hint */}
